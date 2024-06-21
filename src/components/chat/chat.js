@@ -13,7 +13,7 @@ const ENDPOINT = '01cafade-11d0-4d74-bee4-ff30c528255d';
 
 let socket;
 
-const Chat = () => {
+const Chat = (ENDPOINT) => {
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
   const [users, setUsers] = useState('');
