@@ -9,7 +9,7 @@ import Input from '../Input/Input';
 import { useLocation } from 'react-router-dom';
 import './chat.css';
 
-const ENDPOINT = '01cafade-11d0-4d74-bee4-ff30c528255d';
+const ENDPOINT = 'https://chatappbackend-production-6fc0.up.railway.app';
 
 let socket;
 
