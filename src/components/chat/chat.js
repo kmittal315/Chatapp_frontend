@@ -22,36 +22,66 @@ const Chat = (ENDPOINT) => {
 
   const location = useLocation();
 
-  useEffect(() => {
+//   useEffect(() => {
     
-    const { name, room } = queryString.parse(location.search);
-    // location.search is inside the react router it gives us the content after the ? from the search bar like
-    // ?name=kartik&room=123  which is the api made in the start.js ie the joining page which will open the room
+//     const { name, room } = queryString.parse(location.search);
+//     // location.search is inside the react router it gives us the content after the ? from the search bar like
+//     // ?name=kartik&room=123  which is the api made in the start.js ie the joining page which will open the room
 
-    socket = io.connect(ENDPOINT);
+//     socket = io.connect(ENDPOINT);
 
-    setRoom(room);
-    setName(name)
+//     setRoom(room);
+//     setName(name)
 
-    socket.emit('join', { name, room }, (error) => {
-      if(error) {
-        alert(error);
-      }
-    });
+//     socket.emit('join', { name, room }, (error) => {
+//       if(error) {
+//         alert(error);
+//       }
+//     });
     
-   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ENDPOINT, location.search]);
+//    // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, [ENDPOINT, location.search]);
   
-  useEffect(() => {
-    socket.on('message', message => {
-      setMessages(messages => [ ...messages, message ]);
-    });
+//   useEffect(() => {
+//     socket.on('message', message => {
+//       setMessages(messages => [ ...messages, message ]);
+//     });
     
-    socket.on("roomData", ({ users }) => {
-      setUsers(users);
-    });
-}, []);
+//     socket.on("roomData", ({ users }) => {
+//       setUsers(users);
+//     });
+// }, []);
+useEffect(() => {
 
+    const { name, room } = queryString.parse(location.search);
+    setName(name)
+    setRoom(room);
+
+    const setUp = async () => {
+      socket = await io.connect(ENDPOINT);
+      socket.emit('join', { name, room }, (error) => {
+        if (error) {
+          alert(error);
+        }
+      });
+      socket.on('message', message => {
+        setMessages(messages => [...messages, message]);
+      });
+      socket.on("roomData", ({ users }) => {
+        setUsers(users);
+      });
+    }
+    setUp()
+
+    return () => {
+      socket.off('message', message => {
+        setMessages(messages => [...messages, message]);
+      });
+      socket.off("roomData", ({ users }) => {
+        setUsers(users);
+      });
+    }
+  }, []);
   const sendMessage = (event) => {
     event.preventDefault();
 
