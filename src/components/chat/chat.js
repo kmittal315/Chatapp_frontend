@@ -13,7 +13,7 @@ const ENDPOINT = 'https://chatappbackend-production-6fc0.up.railway.app';
 
 let socket;
 
-const Chat = (ENDPOINT) => {
+const Chat = () => {
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
   const [users, setUsers] = useState('');
