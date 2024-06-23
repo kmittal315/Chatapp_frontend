@@ -28,7 +28,7 @@ const Chat = (ENDPOINT) => {
     // location.search is inside the react router it gives us the content after the ? from the search bar like
     // ?name=kartik&room=123  which is the api made in the start.js ie the joining page which will open the room
 
-    socket = io.connect(ENDPOINT,auth:");
+    socket = io.connect(ENDPOINT);
 
     setRoom(room);
     setName(name)
